@@ -1,0 +1,39 @@
+{
+ "name": "app",
+ "version": "0.0.1",
+ "private": true,
+ "type": "module",
+ "scripts": {
+  "dev": "../../node_modules/.bin/vite --port 3000",
+  "start": "../../node_modules/.bin/vite --port 3000",
+  "build": "../../node_modules/.bin/vite build && tsc",
+  "serve": "../../node_modules/.bin/vite preview",
+  "test": "../../node_modules/.bin/vitest run",
+  "outdated": "bun outdated",
+  "update": "bun update"
+ },
+ "dependencies": {
+  "@tailwindcss/vite": "^4.1.11",
+  "@tanstack/react-router": "^1.130.9",
+  "@tanstack/react-router-devtools": "^1.130.9",
+  "@tanstack/router-plugin": "^1.130.9",
+  "@workspace/ui": "workspace:*",
+  "react": "^19.1.1",
+  "react-dom": "^19.1.1",
+  "tailwindcss": "^4.1.11"
+ },
+ "devDependencies": {
+  "@testing-library/dom": "^10.4.1",
+  "@testing-library/react": "^16.3.0",
+  "@types/react": "^19.1.9",
+  "@types/react-dom": "^19.1.7",
+  "@vitejs/plugin-react": "^4.7.0",
+  "@workspace/eslint-config": "workspace:^",
+  "@workspace/typescript-config": "workspace:*",
+  "jsdom": "^26.1.0",
+  "typescript": "^5.8.3",
+  "vite": "^6.3.5",
+  "vitest": "^3.2.4",
+  "web-vitals": "^4.2.4"
+ }
+}

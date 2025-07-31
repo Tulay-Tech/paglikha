@@ -1,0 +1,17 @@
+{
+  "name": "functions",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy --minify",
+    "cf-typegen": "wrangler types --env-interface CloudflareBindings",
+    "outdated": "bun outdated",
+    "update": "bun update"
+  },
+  "dependencies": {
+    "hono": "^4.8.10"
+  },
+  "devDependencies": {
+    "wrangler": "^4.26.1"
+  }
+}

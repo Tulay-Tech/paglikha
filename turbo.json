@@ -16,6 +16,12 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "outdated": {
+      "cache": false
+    },
+    "update": {
+      "cache": false
     }
   }
 }
