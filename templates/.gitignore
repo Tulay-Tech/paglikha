@@ -25,6 +25,7 @@ coverage
 .next/
 out/
 build
+dist
 
 
 # Debug
@@ -36,5 +37,3 @@ npm-debug.log*
 
 # sst
 .sst
-
-dist

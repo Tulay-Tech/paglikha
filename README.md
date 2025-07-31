@@ -1,31 +1,66 @@
-# shadcn/ui monorepo template
+# Paglikha App
 
-This template is for creating a monorepo with shadcn/ui.
+A CLI tool to create Paglikha monorepo applications with Turborepo, React, Next.js, and more.
 
 ## Usage
 
-```bash
-pnpm dlx shadcn@latest init
-```
-
-## Adding components
-
-To add components to your app, run the following command at the root of your `web` app:
+### Create a new project
 
 ```bash
-pnpm dlx shadcn@latest add button -c apps/web
+bunx paglikha-app my-app-name
 ```
 
-This will place the ui components in the `packages/ui/src/components` directory.
+### Create in current directory
 
-## Tailwind
-
-Your `tailwind.config.ts` and `globals.css` are already set up to use the components from the `ui` package.
-
-## Using components
-
-To use the components in your app, import them from the `ui` package.
-
-```tsx
-import { Button } from "@workspace/ui/components/button"
+```bash
+bunx paglikha-app ./
 ```
+
+### Interactive mode
+
+```bash
+bunx paglikha-app
+```
+
+The CLI will prompt you for a project name.
+
+## What's included
+
+- **Monorepo structure** with Turborepo
+- **Multiple apps**: React app, Next.js sites, API, and Cloudflare Functions
+- **Shared packages**: UI components, ESLint config, TypeScript config
+- **Modern tooling**: Bun, TypeScript, Tailwind CSS, SST
+- **Development ready**: Pre-configured scripts and dependencies
+
+## Project Structure
+
+```
+your-app/
+├── apps/
+│   ├── api/          # API server
+│   ├── app/          # React application
+│   ├── functions/    # Cloudflare Functions
+│   ├── sites/        # Next.js sites
+│   └── www/          # Marketing site
+├── packages/
+│   ├── eslint-config/    # Shared ESLint configuration
+│   ├── typescript-config/ # Shared TypeScript configuration
+│   └── ui/               # Shared UI components
+└── package.json      # Root package.json with workspaces
+```
+
+## Getting Started
+
+After creating your project:
+
+```bash
+cd your-app-name
+bun dev
+```
+
+This will start all development servers using Turborepo.
+
+## Requirements
+
+- Node.js 18+
+- Bun (recommended package manager)
