@@ -38,3 +38,5 @@ npm-debug.log*
 .sst
 
 dist
+
+templates/bun.lock
