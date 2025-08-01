@@ -1,6 +1,6 @@
 {
   "name": "paglikha-app",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "CLI tool to create Paglikha monorepo applications",
   "main": "dist/cli.js",
   "bin": {

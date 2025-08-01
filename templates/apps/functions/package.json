@@ -9,6 +9,8 @@
     "update": "bun update"
   },
   "dependencies": {
+    "@workspace/db": "workspace:*",
+    "drizzle-orm": "^0.44.4",
     "hono": "^4.8.10"
   },
   "devDependencies": {
