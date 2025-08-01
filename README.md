@@ -1,6 +1,8 @@
 # Paglikha App
 
-A CLI tool to create Paglikha monorepo applications with Turborepo, React, Next.js, and more.
+A CLI tool to create Paglikha monorepo applications with Turborepo, React, Next.js, and more. This template is built on top of shadcn/ui monorepo template
+
+This is built mainly for me and how I like to build my Typescript applications
 
 ## Usage
 
@@ -39,8 +41,7 @@ your-app/
 ├── apps/
 │   ├── api/          # API server
 │   ├── app/          # React application
-│   ├── functions/    # Cloudflare Functions
-│   ├── sites/        # Next.js sites
+│   ├── functions/    # Cloudflare/lambda Functions
 │   └── www/          # Marketing site
 ├── packages/
 │   ├── eslint-config/    # Shared ESLint configuration
@@ -64,3 +65,7 @@ This will start all development servers using Turborepo.
 
 - Node.js 18+
 - Bun (recommended package manager)
+
+## Next Steps
+
+- Add Drizzle ORM to packages and support for multi-db setup in Turso
