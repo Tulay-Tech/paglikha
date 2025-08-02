@@ -21,14 +21,14 @@ async function promptForName(): Promise<string> {
 
 async function copyTemplate(
   templatePath: string,
-  targetPath: string,
+  targetPath: string
 ): Promise<void> {
   await cp(templatePath, targetPath, { recursive: true });
 }
 
 async function updatePackageJson(
   targetPath: string,
-  projectName: string,
+  projectName: string
 ): Promise<void> {
   const packageJsonPath = join(targetPath, "package.json");
   const packageJsonContent = await readFile(packageJsonPath, "utf-8");
@@ -39,25 +39,50 @@ async function updatePackageJson(
   await writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2) + "\n");
 }
 
-async function runBunInstall(targetPath: string): Promise<void> {
+async function runCommand(
+  command: string,
+  args: string[],
+  targetPath: string,
+  input?: string
+): Promise<void> {
   return new Promise((resolve, reject) => {
-    const bunInstall = spawn("bun", ["install"], {
+    const process = spawn(command, args, {
       cwd: targetPath,
-      stdio: "inherit",
+      stdio: input ? "pipe" : "inherit",
     });
 
-    bunInstall.on("close", (code) => {
+    if (input) {
+      process.stdin?.write(input);
+      process.stdin?.end();
+    }
+
+    process.on("close", (code) => {
       if (code === 0) {
         resolve();
       } else {
-        reject(new Error(`bun install failed with exit code ${code}`));
+        reject(
+          new Error(
+            `${command} ${args.join(" ")} failed with exit code ${code}`
+          )
+        );
       }
     });
 
-    bunInstall.on("error", (error) => {
+    process.on("error", (error) => {
       reject(error);
     });
   });
+}
+
+async function runBunInstall(targetPath: string): Promise<void> {
+  await runCommand("bun", ["install"], targetPath);
+}
+
+async function runSstInit(targetPath: string): Promise<void> {
+  // Use --yes flag to skip confirmation, but still need to provide AWS selection
+  // The prompt will ask for provider, so we send Enter to select AWS (default)
+  const input = "\n";
+  await runCommand("bunx", ["sst@latest", "init", "--yes"], targetPath, input);
 }
 
 async function main() {
@@ -106,6 +131,10 @@ async function main() {
     // Run bun install
     console.log("Installing dependencies...");
     await runBunInstall(targetPath);
+
+    // Run SST init with default settings
+    console.log("Initializing SST with AWS...");
+    await runSstInit(targetPath);
 
     console.log(`\n✅ Successfully created ${projectName}!`);
 
