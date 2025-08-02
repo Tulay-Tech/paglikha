@@ -1,10 +1,11 @@
 import { drizzle } from "drizzle-orm/libsql";
 import { createClient } from "@libsql/client";
 
-const client = createClient({
-  url: process.env.MAIN_DB_URL!,
-  authToken: process.env.DATABASE_AUTH_TOKEN,
-});
+export const getDatabase = (url: string) => {
+  const client = createClient({
+    url: url!,
+  });
+  return drizzle(client);
+};
 
-export const database = drizzle({ client });
-export * from "./schema";
+export * from "./schema/index.js";

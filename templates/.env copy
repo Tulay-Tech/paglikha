@@ -1,0 +1,2 @@
+MAIN_DB_URL="libsql://exmple.turso.io?authToken="
+

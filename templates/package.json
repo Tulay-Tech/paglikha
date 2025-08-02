@@ -12,7 +12,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo lint",
     "outdated": "bun outdated",
-    "update": "bun update"
+    "update": "bun update",
+    "db-push": "drizzle-kit push --config=packages/db/drizzle.config.ts"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "4.20250731.0",

@@ -2,13 +2,11 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "functions",
   "main": "src/index.ts",
-  "compatibility_date": "2025-07-31"
-  // "compatibility_flags": [
-  //   "nodejs_compat"
-  // ],
-  // "vars": {
-  //   "MY_VAR": "my-variable"
-  // },
+  "compatibility_date": "2025-07-31",
+  "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "MAIN_DB_URL":"libsql://example.turso.io?authToken="
+  }
   // "kv_namespaces": [
   //   {
   //     "binding": "MY_KV_NAMESPACE",

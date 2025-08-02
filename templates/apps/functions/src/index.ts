@@ -1,18 +1,13 @@
 import { Hono } from "hono";
-import { database } from "@workspace/db";
+import { getDatabase } from "@workspace/db";
 import { users } from "@workspace/db/schema";
 
 const app = new Hono();
 
-app.get("/", (c) => {
-  return c.text("Hello Hono!");
-});
-
-const db = database;
-
-async function getUsers() {
+app.get("/", async (c) => {
+  const db = getDatabase(process.env.MAIN_DB_URL!);
   const result = await db.select().from(users);
-  return result;
-}
+  return c.json(result);
+});
 
 export default app;
