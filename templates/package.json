@@ -11,8 +11,8 @@
     "dev": "turbo dev",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo lint",
-    "outdated": "bun outdated",
-    "update": "bun update",
+    "outdated:turbo": "turbo outdated",
+    "update:turbo": "turbo update",
     "db-push": "drizzle-kit push --config=packages/db/drizzle.config.ts"
   },
   "devDependencies": {

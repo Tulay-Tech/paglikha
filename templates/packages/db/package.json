@@ -13,7 +13,7 @@
     "drizzle-kit": "^0.31.4"
   },
   "peerDependencies": {
-    "typescript": "^5"
+    "typescript": "^5.9.2"
   },
   "dependencies": {
     "@libsql/client": "^0.15.10",

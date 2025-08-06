@@ -14,9 +14,9 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.11",
-    "@tanstack/react-router": "^1.130.9",
-    "@tanstack/react-router-devtools": "^1.130.9",
-    "@tanstack/router-plugin": "^1.130.9",
+    "@tanstack/react-router": "^1.130.12",
+    "@tanstack/react-router-devtools": "^1.130.13",
+    "@tanstack/router-plugin": "^1.130.15",
     "@workspace/ui": "workspace:*",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
@@ -31,7 +31,7 @@
     "@workspace/eslint-config": "workspace:^",
     "@workspace/typescript-config": "workspace:*",
     "jsdom": "^26.1.0",
-    "typescript": "^5.8.3",
+    "typescript": "^5.9.2",
     "vite": "^6.3.5",
     "vitest": "^3.2.4",
     "web-vitals": "^4.2.4"
