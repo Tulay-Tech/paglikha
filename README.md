@@ -1,9 +1,5 @@
 # Paglikha App
 
-A CLI tool to create Paglikha monorepo applications with Turborepo, React, Next.js, and more. This template is built on top of shadcn/ui monorepo template
-
-This is built mainly for me and how I like to build my Typescript applications
-
 ## Usage
 
 ### Create a new project
@@ -25,30 +21,6 @@ bunx paglikha-app
 ```
 
 The CLI will prompt you for a project name.
-
-## What's included
-
-- **Monorepo structure** with Turborepo
-- **Multiple apps**: React app, Next.js sites, API, and Cloudflare Functions
-- **Shared packages**: UI components, ESLint config, TypeScript config
-- **Modern tooling**: Bun, TypeScript, Tailwind CSS, SST
-- **Development ready**: Pre-configured scripts and dependencies
-
-## Project Structure
-
-```
-your-app/
-├── apps/
-│   ├── api/          # API server
-│   ├── app/          # React application
-│   ├── functions/    # Cloudflare/lambda Functions
-│   └── www/          # Marketing site
-├── packages/
-│   ├── eslint-config/    # Shared ESLint configuration
-│   ├── typescript-config/ # Shared TypeScript configuration
-│   └── ui/               # Shared UI components
-└── package.json      # Root package.json with workspaces
-```
 
 ## Getting Started
 
