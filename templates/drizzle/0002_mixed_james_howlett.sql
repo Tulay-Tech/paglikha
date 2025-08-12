@@ -1,0 +1,1 @@
+ALTER TABLE `employee` RENAME COLUMN "id" TO "employee_id";

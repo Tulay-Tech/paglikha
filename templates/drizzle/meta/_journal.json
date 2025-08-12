@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1754929434033,
+      "tag": "0000_rainy_daimon_hellstrom",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1754930992452,
+      "tag": "0001_dear_silvermane",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1754931093655,
+      "tag": "0002_mixed_james_howlett",
+      "breakpoints": true
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+DATABASE_URL="libsql://example.turso.io?authToken=example"
+
+BETTER_AUTH_SECRET=example
+
+BETTER_AUTH_URL=http://localhost:3000 #Base URL of your app
