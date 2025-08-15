@@ -5,19 +5,19 @@
 ### Create a new project
 
 ```bash
-bunx paglikha-app my-app-name
+bunx create-paglikha-app my-app-name
 ```
 
 ### Create in current directory
 
 ```bash
-bunx paglikha-app ./
+bunx create-paglikha-app ./
 ```
 
 ### Interactive mode
 
 ```bash
-bunx paglikha-app
+bunx create-paglikha-app
 ```
 
 The CLI will prompt you for a project name.
@@ -27,7 +27,7 @@ The CLI will prompt you for a project name.
 After creating your project:
 
 ```bash
-cd your-app-name
+cd my-app-name
 bun dev
 ```
 
@@ -37,7 +37,3 @@ This will start all development servers using Turborepo.
 
 - Node.js 18+
 - Bun (recommended package manager)
-
-## Next Steps
-
-- Add Drizzle ORM to packages and support for multi-db setup in Turso

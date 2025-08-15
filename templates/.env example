@@ -3,3 +3,13 @@ DATABASE_URL="libsql://example.turso.io?authToken=example"
 BETTER_AUTH_SECRET=example
 
 BETTER_AUTH_URL=http://localhost:3000 #Base URL of your app
+
+# Polar.sh Configuration
+
+POLAR_ACCESS_TOKEN=your_polar_access_token_here
+POLAR_WEBHOOK_SECRET=your_webhook_secret_here
+POLAR_PRODUCT_ID=your_product_id_from_polar_dashboard
+
+# Optional: Set NODE_ENV to control sandbox vs production
+
+NODE_ENV=development
