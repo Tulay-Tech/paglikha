@@ -78,13 +78,6 @@ async function runBunInstall(targetPath: string): Promise<void> {
   await runCommand("bun", ["install"], targetPath);
 }
 
-async function runSstInit(targetPath: string): Promise<void> {
-  // Use --yes flag to skip confirmation, but still need to provide AWS selection
-  // The prompt will ask for provider, so we send Enter to select AWS (default)
-  const input = "\n";
-  await runCommand("bunx", ["sst@latest", "init", "--yes"], targetPath, input);
-}
-
 async function main() {
   try {
     const args = process.argv.slice(2);
@@ -131,10 +124,6 @@ async function main() {
     // Run bun install
     console.log("Installing dependencies...");
     await runBunInstall(targetPath);
-
-    // Run SST init with default settings
-    console.log("Initializing SST with AWS...");
-    await runSstInit(targetPath);
 
     console.log(`\n✅ Successfully created ${projectName}!`);
 

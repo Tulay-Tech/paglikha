@@ -13,6 +13,7 @@ export default defineConfig({
     }),
     tanstackStart({
       customViteReactPlugin: true,
+      target: "cloudflare-module",
     }),
     react(),
   ],

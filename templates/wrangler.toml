@@ -1,0 +1,16 @@
+"$schema" = "node_modules/wrangler/config-schema.json"
+name = "paglikha"
+main = ".output/server/index.mjs"
+compatibility_date = "2025-08-21"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = ".output/public"
+
+[observability]
+enabled = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "paglikhadb"
+database_id = "20cff57e-aada-4558-996d-8c5328073365"

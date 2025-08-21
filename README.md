@@ -31,8 +31,6 @@ cd my-app-name
 bun dev
 ```
 
-This will start all development servers using Turborepo.
-
 ## Requirements
 
 - Node.js 18+

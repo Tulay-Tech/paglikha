@@ -1,9 +1,24 @@
-import "dotenv/config";
-import { drizzle } from "drizzle-orm/libsql";
-import { createClient } from "@libsql/client";
+// db.ts
+import { drizzle } from "drizzle-orm/d1";
+import type { D1Database } from "@cloudflare/workers-types";
 
-const client = createClient({
-  url: process.env.DATABASE_URL!,
-});
+let dbInstance: ReturnType<typeof drizzle> | null = null;
 
-export const db = drizzle({ client });
+/**
+ * Initialize Drizzle with the D1 binding.
+ * Must be called once per request.
+ */
+export function initDb(db: D1Database) {
+  if (!dbInstance) {
+    dbInstance = drizzle(db);
+  }
+}
+
+/**
+ * Get the Drizzle instance anywhere after initialization.
+ */
+export const db = () => {
+  if (!dbInstance)
+    throw new Error("DB not initialized. Call initDb(env.DB) first!");
+  return dbInstance;
+};

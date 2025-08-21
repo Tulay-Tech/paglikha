@@ -3,3 +3,7 @@
 .sst
 node_modules
 .env
+.nitro
+.output
+.wrangler
+.tanstack

@@ -1,6 +1,6 @@
 {
   "name": "create-paglikha-app",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "CLI tool to create Paglikha applications",
   "main": "dist/cli.js",
   "bin": {
