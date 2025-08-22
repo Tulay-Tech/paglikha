@@ -9,7 +9,7 @@ import { PasswordProvider } from "@openauthjs/openauth/provider/password";
 import { PasswordUI } from "@openauthjs/openauth/ui/password";
 
 interface Env {
-  CloudflareAuthKV: KVNamespace;
+  AuthKV: KVNamespace;
 }
 
 async function getUser(email: string) {
@@ -22,7 +22,7 @@ export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext) {
     return issuer({
       storage: CloudflareStorage({
-        namespace: env.CloudflareAuthKV,
+        namespace: env.AuthKV,
       }),
       subjects,
       providers: {

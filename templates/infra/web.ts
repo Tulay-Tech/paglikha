@@ -1,7 +1,7 @@
 import { api } from "./api";
 import { auth } from "./auth";
 
-const app = new sst.cloudflare.StaticSite("MyWeb", {
+export const app = new sst.cloudflare.StaticSite("MyWeb", {
   path: "packages/web",
   build: {
     command: "bun run build",

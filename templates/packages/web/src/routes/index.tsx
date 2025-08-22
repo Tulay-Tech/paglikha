@@ -1,10 +1,16 @@
 import { useAuth } from "@/components/AuthContext";
 import { useState } from "react";
+import { createFileRoute } from "@tanstack/react-router";
 
-function App() {
+export const Route = createFileRoute("/")({
+  component: RouteComponent,
+});
+
+function RouteComponent() {
   const auth = useAuth();
   const [status, setStatus] = useState("");
 
+  console.log(import.meta.env.VITE_AUTH_URL);
   async function callApi() {
     const res = await fetch(`${import.meta.env.VITE_API_URL}me`, {
       headers: {
@@ -35,5 +41,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

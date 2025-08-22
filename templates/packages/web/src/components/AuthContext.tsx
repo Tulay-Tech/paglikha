@@ -8,9 +8,14 @@ import {
 } from "react";
 import { createClient } from "@openauthjs/openauth/client";
 
+const authUrl = import.meta.env.VITE_AUTH_URL;
+if (authUrl === undefined) {
+  throw new Error("VITE_AUTH_URL environment variable is not defined");
+}
+
 const client = createClient({
   clientID: "react",
-  issuer: "http://localhost:3000",
+  issuer: authUrl,
 });
 
 interface AuthContextType {
@@ -113,7 +118,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function user() {
-    const res = await fetch("http://localhost:3001/", {
+    const res = await fetch(import.meta.env.VITE_API_URL, {
       headers: {
         Authorization: `Bearer ${token.current}`,
       },

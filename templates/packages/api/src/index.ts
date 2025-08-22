@@ -1,23 +1,21 @@
 import { Hono } from "hono";
-import { Resource } from "sst";
-
 import { createClient } from "@openauthjs/openauth/client";
 import { subjects } from "../../auth/subjects";
 
-const client = createClient({
-  clientID: "hono-api",
-  issuer: Resource.CloudflareAuth.url,
-});
+type Env = {
+  WORKERS_AUTH_URL: string;
+};
 
 async function getUserInfo(userId: string) {
-  // Get user from database
   return {
     userId,
     name: "Patrick Star",
   };
 }
 
-const app = new Hono();
+const app = new Hono<{ Bindings: Env }>();
+
+app.get("/", (c) => c.text("ok"));
 
 app.get("/me", async (c) => {
   const authHeader = c.req.header("Authorization");
@@ -27,13 +25,26 @@ app.get("/me", async (c) => {
   }
 
   const token = authHeader.split(" ")[1];
-  const verified = await client.verify(subjects, token);
 
-  if (verified.err) {
-    return c.status(401);
+  try {
+    const client = createClient({
+      clientID: "api",
+      issuer: c.env.WORKERS_AUTH_URL,
+    });
+
+    const verified = await client.verify(subjects, token);
+
+    if (verified.err) {
+      console.log("Verification error:", verified.err);
+      return c.status(401);
+    }
+
+    return c.json(await getUserInfo(verified.subject.properties.id));
+  } catch (error) {
+    console.log("Full error:", error);
+    c.status(500);
+    return c.json({ error: "Verification failed" });
   }
-
-  return c.json(await getUserInfo(verified.subject.properties.id));
 });
 
-export const handler = app;
+export default app;
