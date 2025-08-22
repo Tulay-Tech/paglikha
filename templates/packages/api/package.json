@@ -1,0 +1,11 @@
+{
+  "name": "api",
+  "type": "module",
+  "scripts": {
+    "dev": "bun src/index.ts"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "hono": "^4.9.2"
+  }
+}
