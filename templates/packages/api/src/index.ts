@@ -1,9 +1,13 @@
 import { Hono } from "hono";
-import { createClient } from "@openauthjs/openauth/client";
-import { subjects } from "../../auth/subjects";
 
-type Env = {
-  WORKERS_AUTH_URL: string;
+import users from "./users/route";
+import authMiddleware from "../middleware/authMiddleware";
+
+// Extend the Context to include user information
+type Variables = {
+  user: {
+    userId: string;
+  };
 };
 
 async function getUserInfo(userId: string) {
@@ -13,38 +17,20 @@ async function getUserInfo(userId: string) {
   };
 }
 
-const app = new Hono<{ Bindings: Env }>();
+const app = new Hono<{ Variables: Variables }>().basePath("/api");
 
 app.get("/", (c) => c.text("ok"));
 
-app.get("/me", async (c) => {
-  const authHeader = c.req.header("Authorization");
-
-  if (!authHeader) {
-    return c.status(401);
-  }
-
-  const token = authHeader.split(" ")[1];
-
-  try {
-    const client = createClient({
-      clientID: "api",
-      issuer: c.env.WORKERS_AUTH_URL,
-    });
-
-    const verified = await client.verify(subjects, token);
-
-    if (verified.err) {
-      console.log("Verification error:", verified.err);
-      return c.status(401);
-    }
-
-    return c.json(await getUserInfo(verified.subject.properties.id));
-  } catch (error) {
-    console.log("Full error:", error);
-    c.status(500);
-    return c.json({ error: "Verification failed" });
-  }
+app.get("/me", authMiddleware, async (c) => {
+  const user = c.get("user");
+  return c.json(await getUserInfo(user.userId));
 });
+
+app.get("/protected", authMiddleware, async (c) => {
+  const user = c.get("user");
+  return c.json({ message: "This is a protected route", userId: user.userId });
+});
+
+app.route("/users", users);
 
 export default app;
