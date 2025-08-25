@@ -118,7 +118,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function user() {
-    const res = await fetch(import.meta.env.VITE_API_URL, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}api/users`, {
       headers: {
         Authorization: `Bearer ${token.current}`,
       },

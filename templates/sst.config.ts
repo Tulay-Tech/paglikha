@@ -26,6 +26,10 @@ export default $config({
       handler: "packages/api/src/index.ts",
       environment: {
         WORKERS_AUTH_URL: auth.url as any,
+        DATABASEID: db.databaseId as any,
+        CLOUDFLARE_API_TOKEN: process.env.CLOUDFLARE_API_TOKEN as any,
+        CLOUDFLARE_DEFAULT_ACCOUNT_ID: process.env
+          .CLOUDFLARE_DEFAULT_ACCOUNT_ID as any,
       },
     });
 

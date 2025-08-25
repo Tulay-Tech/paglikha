@@ -7,20 +7,40 @@ import {
 import { subjects } from "./subjects";
 import { PasswordProvider } from "@openauthjs/openauth/provider/password";
 import { PasswordUI } from "@openauthjs/openauth/ui/password";
+import { Resource } from "sst";
+import { THEME_OPENAUTH } from "@openauthjs/openauth/ui/theme";
 
 interface Env {
   AuthKV: KVNamespace;
 }
 
-async function getUser(email: string) {
-  // Get user from database
-  // Return user ID
-  return "123";
+async function getUser(email: string): Promise<string> {
+  // First, try to find existing user
+  const existingUser = await Resource.MyDatabase.prepare(
+    "SELECT id FROM users WHERE email = ?"
+  )
+    .bind(email)
+    .first();
+
+  if (existingUser) {
+    // User exists - this is a login
+    return existingUser.id.toString();
+  }
+
+  // User doesn't exist - create new user (registration)
+  const newUser = await Resource.MyDatabase.prepare(
+    "INSERT INTO users (email) VALUES (?) RETURNING id"
+  )
+    .bind(email)
+    .first();
+
+  return newUser.id.toString();
 }
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext) {
     return issuer({
+      theme: THEME_OPENAUTH,
       storage: CloudflareStorage({
         namespace: env.AuthKV,
       }),
