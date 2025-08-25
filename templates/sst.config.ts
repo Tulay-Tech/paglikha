@@ -10,19 +10,32 @@ export default $config({
     };
   },
   async run() {
-    const db = new sst.cloudflare.D1("MyDatabase");
+    const database = new sst.cloudflare.D1("ProjectDatabase");
+
+    // for Drizzle to connect over HTTP
+    const databaseId = database.databaseId.apply(
+      (id) => new sst.Secret("ProjectDatabaseId", id)
+    );
+    const cloudflareAccountId = new sst.Secret(
+      "CloudflareAccountId",
+      sst.cloudflare.DEFAULT_ACCOUNT_ID
+    );
+    const cloudflareApiToken = new sst.Secret(
+      "CloudflareApiToken",
+      process.env.CLOUDFLARE_API_TOKEN
+    );
 
     const kv = new sst.cloudflare.Kv("AuthKV");
 
     const auth = new sst.cloudflare.Worker("Auth", {
       handler: "packages/auth/issuer.ts",
-      link: [kv, db],
+      link: [kv, database],
       url: true,
     });
 
     const api = new sst.cloudflare.Worker("Hono", {
       url: true,
-      link: [db],
+      link: [database, databaseId, cloudflareAccountId, cloudflareApiToken],
       handler: "packages/api/src/index.ts",
       environment: {
         WORKERS_AUTH_URL: auth.url as any,

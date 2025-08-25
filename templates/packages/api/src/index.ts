@@ -10,6 +10,10 @@ type Variables = {
   };
 };
 
+type Env = {
+  CLOUDFLARE_D1_TOKEN: string;
+};
+
 async function getUserInfo(userId: string) {
   return {
     userId,
@@ -17,9 +21,11 @@ async function getUserInfo(userId: string) {
   };
 }
 
-const app = new Hono<{ Variables: Variables }>().basePath("/api");
+const app = new Hono<{ Variables: Variables; Bindings: Env }>().basePath(
+  "/api"
+);
 
-app.get("/", (c) => c.text("ok"));
+app.get("/", (c) => c.text(c.env.CLOUDFLARE_D1_TOKEN));
 
 app.get("/me", authMiddleware, async (c) => {
   const user = c.get("user");
