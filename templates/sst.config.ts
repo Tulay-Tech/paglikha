@@ -18,11 +18,11 @@ export default $config({
     );
     const cloudflareAccountId = new sst.Secret(
       "CloudflareAccountId",
-      sst.cloudflare.DEFAULT_ACCOUNT_ID
+      process.env.BETTER_AUTH_SECRET
     );
     const cloudflareApiToken = new sst.Secret(
       "CloudflareApiToken",
-      process.env.CLOUDFLARE_API_TOKEN
+      process.env.BETTER_AUTH_SECRET
     );
 
     const betterAuthToken = new sst.Secret(
