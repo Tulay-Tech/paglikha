@@ -1,11 +1,5 @@
-import {
-  createFileRoute,
-  Link,
-  redirect,
-  useNavigate,
-} from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { signIn } from "@/lib/auth-client";
 
 import {
   Card,
@@ -14,26 +8,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getUserID } from "@/lib/auth-server-func";
+
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { authClient } from "@/lib/auth-client";
 
 export const Route = createFileRoute("/auth/login")({
   component: RouteComponent,
-  beforeLoad: async () => {
-    const userID = await getUserID();
-    return {
-      userID,
-    };
-  },
-  loader: async ({ context }) => {
-    if (context.userID) {
-      throw redirect({ to: "/" });
-    }
-    return {
-      userID: context.userID,
-    };
-  },
 });
 
 function RouteComponent() {
@@ -49,7 +30,7 @@ function RouteComponent() {
     setError("");
 
     try {
-      await signIn.email({
+      await authClient.signIn.email({
         email,
         password,
       });

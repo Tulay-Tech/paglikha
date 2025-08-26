@@ -1,40 +1,51 @@
 import { Hono } from "hono";
-
+import type { D1Database } from "@cloudflare/workers-types";
+import { initAuth } from "./lib/auth";
 import users from "./users/route";
-import authMiddleware from "../middleware/authMiddleware";
 
-// Extend the Context to include user information
-type Variables = {
-  user: {
-    userId: string;
+const app = new Hono<{
+  Bindings: {
+    MyDatabase: D1Database;
   };
-};
-
-type Env = {
-  CLOUDFLARE_D1_TOKEN: string;
-};
-
-async function getUserInfo(userId: string) {
-  return {
-    userId,
-    name: "Patrick Star",
+  Variables: {
+    user: ReturnType<typeof initAuth>["$Infer"]["Session"]["user"] | null;
+    session: ReturnType<typeof initAuth>["$Infer"]["Session"]["session"] | null;
   };
-}
+}>().basePath("/api");
 
-const app = new Hono<{ Variables: Variables; Bindings: Env }>().basePath(
-  "/api"
-);
+// Middleware creates an auth instance per request
+app.use("*", async (c, next) => {
+  const auth = initAuth();
 
-app.get("/", (c) => c.text(c.env.CLOUDFLARE_D1_TOKEN));
+  const session = await auth.api.getSession({
+    headers: c.req.raw.headers,
+  });
 
-app.get("/me", authMiddleware, async (c) => {
-  const user = c.get("user");
-  return c.json(await getUserInfo(user.userId));
+  if (!session) {
+    c.set("user", null);
+    c.set("session", null);
+    return c.body("unauthorized", 401);
+  }
+
+  c.set("user", session.user);
+  c.set("session", session.session);
+  return next();
 });
 
-app.get("/protected", authMiddleware, async (c) => {
+app.get("/", (c) => c.text("ok"));
+
+// Auth routes
+app.on(["POST", "GET"], "/auth/*", (c) => {
+  const auth = initAuth();
+  return auth.handler(c.req.raw);
+});
+
+// Session route
+app.get("/session", (c) => {
   const user = c.get("user");
-  return c.json({ message: "This is a protected route", userId: user.userId });
+  const session = c.get("session");
+
+  return c.json({ user, session });
 });
 
 app.route("/users", users);

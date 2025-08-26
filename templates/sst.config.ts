@@ -10,7 +10,7 @@ export default $config({
     };
   },
   async run() {
-    const database = new sst.cloudflare.D1("ProjectDatabase");
+    const database = new sst.cloudflare.D1("MyDatabase");
 
     // for Drizzle to connect over HTTP
     const databaseId = database.databaseId.apply(
@@ -25,21 +25,21 @@ export default $config({
       process.env.CLOUDFLARE_API_TOKEN
     );
 
-    const kv = new sst.cloudflare.Kv("AuthKV");
-
-    const auth = new sst.cloudflare.Worker("Auth", {
-      handler: "packages/auth/issuer.ts",
-      link: [kv, database],
-      url: true,
-    });
+    const betterAuthToken = new sst.Secret(
+      "BetterAuthToken",
+      process.env.BETTER_AUTH_SECRET
+    );
 
     const api = new sst.cloudflare.Worker("Hono", {
       url: true,
-      link: [database, databaseId, cloudflareAccountId, cloudflareApiToken],
+      link: [
+        database,
+        databaseId,
+        cloudflareAccountId,
+        cloudflareApiToken,
+        betterAuthToken,
+      ],
       handler: "packages/api/src/index.ts",
-      environment: {
-        WORKERS_AUTH_URL: auth.url as any,
-      },
     });
 
     const app = new sst.cloudflare.StaticSite("MyWeb", {
@@ -50,13 +50,11 @@ export default $config({
       },
       environment: {
         VITE_API_URL: api.url as any,
-        VITE_AUTH_URL: auth.url as any,
       },
     });
 
     return {
       api: api.url,
-      auth: auth.url,
       app: app.url,
     };
   },

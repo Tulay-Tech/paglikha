@@ -6,6 +6,34 @@
 import "sst"
 declare module "sst" {
   export interface Resource {
+    "BetterAuthToken": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
+    "CloudflareAccountId": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
+    "CloudflareApiToken": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
+    "MyWeb": {
+      "type": "sst.cloudflare.StaticSite"
+      "url": string
+    }
+    "ProjectDatabaseId": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
+  }
+}
+// cloudflare 
+import * as cloudflare from "@cloudflare/workers-types";
+declare module "sst" {
+  export interface Resource {
+    "Hono": cloudflare.Service
+    "MyDatabase": cloudflare.D1Database
   }
 }
 
